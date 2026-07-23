@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: bavya-video-portal
+    ports:
+      - "8014:5000"
+    env_file:
+      - .env
+    volumes:
+      - uploads_data:/app/uploads
+    restart: always
+
+volumes:
+  uploads_data:
