@@ -1,0 +1,11 @@
+# Exclude local environment files containing database passwords
+.env
+
+# Exclude Python compile files and caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Exclude local test upload videos and assets
+uploads/

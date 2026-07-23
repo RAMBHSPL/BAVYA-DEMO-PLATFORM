@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BAVYA DEMO PLATFORM</title>
+  <link rel="stylesheet" href="style.css?v=12">
+  <!-- Lucide Icons for clean look -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+  <!-- App Header -->
+  <header>
+    <div class="header-container">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">
+          <i data-lucide="play-circle"></i>
+        </div>
+        <span class="brand-name">BAVYA DEMO PLATFORM</span>
+      </a>
+      <div class="header-search-wrapper">
+        <i data-lucide="search" class="header-search-icon"></i>
+        <input type="text" id="searchInput" class="header-search-input" placeholder="Search videos by title or tags...">
+      </div>
+      <div class="nav-links"
+        style="display: flex; gap: 0.75rem; background: none; border: none; padding: 0; align-items: center; flex: 1 1 0%; justify-content: flex-end;">
+        <button class="btn-primary" id="btnOpenUploadModal"
+          style="display: none; width: auto; padding: 0.5rem 1.25rem; font-size: 0.85rem; height: 38px; border-radius: 99px; background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); border: none; color: white; cursor: pointer; font-weight: 600; box-shadow: var(--shadow-glow-cyan); align-items: center; gap: 0.4rem;">
+          <i data-lucide="upload" style="width: 16px; height: 16px;"></i> Upload Video
+        </button>
+        <button class="btn-secondary" id="btnLoginBtn"
+          style="padding: 0.5rem 1.25rem; font-size: 0.85rem; height: 38px; border-radius: 99px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.4rem;">
+          <i data-lucide="lock" style="width: 16px; height: 16px;"></i> Admin Login
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Body -->
+  <main class="container">
+
+    <!-- GALLERY VIEW -->
+    <section id="galleryView">
+
+      <!-- Featured Video Showcase Carousel -->
+      <div id="featuredShowcase" class="featured-showcase-container" style="display: none; position: relative;">
+        <!-- Left & Right Arrow Navigation -->
+        <button class="featured-nav-arrow left" id="btnFeaturedScrollLeft" title="Scroll Left">
+          <i data-lucide="chevron-left"></i>
+        </button>
+        <button class="featured-nav-arrow right" id="btnFeaturedScrollRight" title="Scroll Right">
+          <i data-lucide="chevron-right"></i>
+        </button>
+
+        <div class="featured-scroll-container" id="featuredScrollContainer">
+          <!-- Rendered dynamically via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Filter Bar (compact, no hero) -->
+      <div class="filter-bar glass-panel">
+        <div class="filter-bar-row">
+          <!-- Project Filter -->
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <select id="projectFilterSelect" class="filter-select">
+              <option value="">All Projects</option>
+            </select>
+            <button class="btn-secondary" id="btnCopyProjectLink" title="Copy Project Link"
+              style="height: 38px; width: 38px; padding: 0; border-radius: 10px;" disabled>
+              <i data-lucide="link" style="width:15px;height:15px;"></i>
+            </button>
+          </div>
+
+          <!-- Dynamic custom fields filters -->
+          <div id="dynamicFiltersContainer" style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+          </div>
+
+          <!-- Tag Chips -->
+          <div class="filter-chips" style="margin-bottom: 0; padding: 0; border: none; background: none;">
+            <span class="chip-label">Tags:</span>
+            <div id="tagChipsContainer" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <button class="chip active" data-tag="all">All Videos</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Videos Grid -->
+      <div id="videoGrid" class="video-grid">
+        <!-- Dynamic Cards Inserted Here -->
+        <div class="empty-state">
+          <i data-lucide="video-off"></i>
+          <h3>No videos found</h3>
+          <p>Click <strong>Admin Login</strong> in the top bar to upload your first video!</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- PLAYER DETAILS VIEW -->
+    <section id="detailsView" style="display: none;">
+      <!-- Back Navigation Button -->
+      <button class="back-btn" id="btnBackToGallery">
+        <i data-lucide="arrow-left"></i> Back to Gallery
+      </button>
+
+      <div class="detail-layout">
+        <!-- Video Player Section -->
+        <div>
+          <div class="player-container" id="videoPlayerContainer">
+            <video id="customVideoPlayer" class="main-video"></video>
+
+            <!-- Custom Controller Overlay -->
+            <div class="custom-controls">
+              <!-- Timeline/Progress Seek -->
+              <div class="timeline-wrapper">
+                <div class="timeline-progress" id="timelineProgress"></div>
+                <input type="range" min="0" max="100" value="0" class="timeline-slider" id="timelineSlider">
+              </div>
+
+              <!-- Button Controls -->
+              <div class="controls-buttons">
+                <!-- Left Control Group -->
+                <div class="left-controls">
+                  <button class="control-btn" id="playPauseBtn" title="Play">
+                    <i data-lucide="play" id="playIcon"></i>
+                  </button>
+                  <button class="control-btn" id="skipBackBtn" title="Rewind 10s">
+                    <i data-lucide="rotate-ccw"></i>
+                  </button>
+                  <button class="control-btn" id="skipForwardBtn" title="Forward 10s">
+                    <i data-lucide="rotate-cw"></i>
+                  </button>
+
+                  <!-- Volume control -->
+                  <div class="volume-wrapper">
+                    <button class="control-btn" id="muteBtn" title="Mute">
+                      <i data-lucide="volume-2" id="volumeIcon"></i>
+                    </button>
+                    <input type="range" min="0" max="1" step="0.05" value="1" class="volume-slider" id="volumeSlider">
+                  </div>
+
+                  <!-- Time Track -->
+                  <div class="time-display">
+                    <span id="currentTime">00:00</span> / <span id="durationTime">00:00</span>
+                  </div>
+                </div>
+
+                <!-- Right Control Group -->
+                <div class="right-controls">
+                  <!-- Audio Language / Voiceover Selector Dropdown -->
+                  <div class="audio-dropdown-wrapper" style="position: relative; display: inline-block;">
+                    <button class="control-btn" id="audioTrackBtn" title="Audio Language / Voiceover"
+                      style="display: none;">
+                      <i data-lucide="headphones"></i>
+                    </button>
+                    <div class="subtitle-menu" id="audioTrackMenu"
+                      style="display: none; position: absolute; bottom: 100%; right: 0; background: rgba(17, 24, 39, 0.95); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.25rem; min-width: 150px; z-index: 100; margin-bottom: 0.5rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); flex-direction: column; gap: 2px;">
+                      <!-- Options loaded dynamically -->
+                    </div>
+                  </div>
+
+                  <!-- Closed Captions / Subtitles Dropdown -->
+                  <div class="subtitle-dropdown-wrapper" style="position: relative; display: inline-block;">
+                    <button class="control-btn" id="ccBtn" title="Subtitles / Translation" style="display: none;">
+                      <i data-lucide="subtitles"></i>
+                    </button>
+                    <div class="subtitle-menu" id="ccMenu"
+                      style="display: none; position: absolute; bottom: 100%; right: 0; background: rgba(17, 24, 39, 0.95); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.25rem; min-width: 120px; z-index: 100; margin-bottom: 0.5rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); flex-direction: column; gap: 2px;">
+                      <!-- Options loaded dynamically -->
+                    </div>
+                  </div>
+
+                  <button class="control-btn" id="speedBtn" title="Playback Speed">1.0x</button>
+                  <button class="control-btn" id="fullscreenBtn" title="Fullscreen">
+                    <i data-lucide="maximize"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Details / Custom Metadata Fields Section -->
+        <div class="info-panel glass-panel">
+          <div class="info-header"
+            style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;">
+            <div>
+              <h1 class="info-title" id="playerVideoTitle">Video Title</h1>
+              <div class="tags-row" id="playerVideoTags">
+                <!-- Dynamic tags badges -->
+              </div>
+            </div>
+            <button class="btn-secondary" id="btnCopyVideoLink" title="Copy Shareable Link for this Video"
+              style="height: 42px; width: 42px; padding: 0;">
+              <i data-lucide="share-2"></i>
+            </button>
+          </div>
+
+          <div>
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--text-secondary);">Video Metadata</h3>
+            <div class="metadata-grid" id="playerCustomFields">
+              <!-- Dynamic custom attributes go here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Login Modal -->
+  <div id="loginModal"
+    style="display: none; position: fixed; inset: 0; background: rgba(3, 7, 18, 0.8); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="glass-panel" style="width: 100%; max-width: 400px; padding: 2rem; position: relative;">
+      <button type="button" id="btnCloseLoginModal"
+        style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-secondary); cursor: pointer;">
+        <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+      </button>
+      <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: #fff; text-align: center; font-family: 'Outfit';">
+        Admin Access</h3>
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input type="text" id="loginUsername" class="form-input" placeholder="Enter username (e.g. BAVYA)" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="loginPassword" class="form-input" placeholder="Enter password" required>
+        </div>
+        <button type="submit" class="btn-primary" style="margin-top: 1.5rem; width: 100%;">
+          <i data-lucide="unlock"></i> Unlock Console
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin/Upload Modal -->
+  <div id="adminModal"
+    style="display: none; position: fixed; inset: 0; background: rgba(3, 7, 18, 0.85); backdrop-filter: blur(8px); z-index: 999; align-items: center; justify-content: center; overflow-y: auto; padding: 2rem 0;">
+    <div class="glass-panel" style="width: 90%; max-width: 1000px; padding: 2.5rem; position: relative; margin: auto;">
+      <button type="button" id="btnCloseAdminModal"
+        style="position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--text-secondary); cursor: pointer;">
+        <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+      </button>
+      <h2 class="form-section-title" id="adminModalTitle"
+        style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; font-size: 1.6rem; color: #fff;">
+        <i data-lucide="upload" style="color: var(--color-secondary); margin-right: 8px;"></i> Upload Video to Portal
+      </h2>
+
+      <div class="admin-grid">
+        <!-- Left Side: Upload Form -->
+        <form id="uploadVideoForm">
+          <!-- Drag and Drop Video Box -->
+          <div class="form-group">
+            <label class="form-label">Video File</label>
+            <div class="drop-zone" id="dropZone">
+              <div class="drop-zone-icon">
+                <i data-lucide="video"></i>
+              </div>
+              <span class="drop-zone-title">Drag & Drop Video File</span>
+              <span class="drop-zone-desc">or click to browse from files</span>
+              <input type="file" id="videoFileInput" accept="video/*" style="display: none;">
+            </div>
+
+            <!-- Selected File Info Box -->
+            <div class="file-selected-box" id="selectedFileBox" style="display: none;">
+              <i data-lucide="file-video" class="file-selected-icon"></i>
+              <div class="file-selected-details">
+                <div id="selectedFileName" class="file-name">filename.mp4</div>
+                <div id="selectedFileSize" class="file-size">12 MB</div>
+              </div>
+              <button type="button" class="btn-remove-file" id="btnRemoveFile">
+                <i data-lucide="trash-2" style="width: 18px; height: 18px;"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Title & Project dropdown -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label">Video Title</label>
+              <input type="text" id="videoTitle" class="form-input" placeholder="Enter title for the video" required>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label">Project Name</label>
+              <select id="projectSelect" class="filter-select" style="min-width: unset; width: 100%; height: 42px;"
+                required>
+                <option value="" disabled selected>-- Select Project --</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.25rem;">
+            <label class="form-label">Tags</label>
+            <div class="tag-input-container" id="tagInputContainer">
+              <input type="text" id="tagTextInput" class="tag-text-input" placeholder="Type tag and press Enter">
+            </div>
+            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Press Enter or comma to
+              add.</span>
+          </div>
+
+          <!-- Custom Thumbnail Image Option -->
+          <div class="form-group" style="margin-bottom: 1.25rem;">
+            <label class="form-label" style="display: flex; align-items: center; gap: 0.4rem;">
+              <i data-lucide="image" style="width: 16px; height: 16px; color: var(--color-secondary);"></i> Custom
+              Thumbnail Image (Optional)
+            </label>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <input type="file" id="thumbnailFileInput" accept="image/*" style="display: none;">
+              <button type="button" class="btn-secondary" id="btnSelectThumbnailFile"
+                style="height: 42px; padding: 0 1rem; flex-grow: 1; text-align: left; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-radius: var(--radius-md); border-color: rgba(255,255,255,0.06);">
+                <i data-lucide="image"
+                  style="vertical-align: middle; margin-right: 5px; width: 16px; height: 16px;"></i> Choose Custom
+                Thumbnail...
+              </button>
+              <button type="button" class="btn-remove-file" id="btnRemoveThumbnail" title="Remove Thumbnail"
+                style="display: none; background: rgba(255,255,255,0.05); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; padding: 0;">
+                <i data-lucide="x" style="width: 14px; height: 14px;"></i>
+              </button>
+            </div>
+            <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Optional custom poster
+              image. If blank, a frame from the video will be auto-generated.</span>
+          </div>
+
+          <!-- CC Subtitle tracks -->
+          <div class="form-group">
+            <label class="form-label">Translation Tracks / Subtitles (.vtt)</label>
+            <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
+              <select id="subtitleLangSelect" class="filter-select" style="min-width: 140px; height: 42px;">
+                <option value="en">English</option>
+                <option value="te">Telugu</option>
+                <option value="hi">Hindi</option>
+                <option value="ta">Tamil</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+              </select>
+              <input type="file" id="subtitleFileInput" accept=".vtt" style="display: none;">
+              <button type="button" class="btn-secondary" id="btnSelectSubtitleFile"
+                style="height: 42px; padding: 0 1rem; flex-grow: 1; text-align: left; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                <i data-lucide="file-text" style="vertical-align: middle; margin-right: 5px;"></i> Choose VTT File...
+              </button>
+              <button type="button" class="btn-sm-action" id="btnAddSubtitleTrack" title="Add Track"
+                style="height: 42px; width: 42px; margin-bottom: 0;">
+                <i data-lucide="plus"></i>
+              </button>
+            </div>
+            <div id="addedSubtitlesList" style="display: flex; flex-direction: column; gap: 0.25rem;"></div>
+          </div>
+
+          <!-- Voiceover Audio Tracks -->
+          <div class="form-group">
+            <label class="form-label">Voiceover Audio Tracks (.mp3, .wav, .m4a)</label>
+            <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
+              <select id="audioLangSelect" class="filter-select" style="min-width: 140px; height: 42px;">
+                <option value="en">English Voiceover</option>
+                <option value="te">Telugu Voiceover</option>
+                <option value="hi">Hindi Voiceover</option>
+                <option value="ta">Tamil Voiceover</option>
+                <option value="es">Spanish Voiceover</option>
+                <option value="fr">French Voiceover</option>
+              </select>
+              <input type="file" id="audioFileInput" accept="audio/*" style="display: none;">
+              <button type="button" class="btn-secondary" id="btnSelectAudioFile"
+                style="height: 42px; padding: 0 1rem; flex-grow: 1; text-align: left; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                <i data-lucide="headphones" style="vertical-align: middle; margin-right: 5px;"></i> Choose Audio File...
+              </button>
+              <button type="button" class="btn-sm-action" id="btnAddAudioTrack" title="Add Audio Track"
+                style="height: 42px; width: 42px; margin-bottom: 0;">
+                <i data-lucide="plus"></i>
+              </button>
+            </div>
+            <div id="addedAudioList" style="display: flex; flex-direction: column; gap: 0.25rem;"></div>
+          </div>
+
+          <!-- Custom Legacy fields (kept for database schema compatibility) -->
+          <div id="dynamicFormFields"></div>
+
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="submit" class="btn-primary" id="btnSubmitVideo" style="flex-grow: 1;">
+              <i data-lucide="upload"></i> Save Video to Portal
+            </button>
+            <button type="button" class="btn-secondary" id="btnCancelEdit"
+              style="display: none; width: auto; flex-shrink: 0;">
+              Cancel Edit
+            </button>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="progress-bar-container" id="uploadProgressContainer">
+            <div
+              style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.25rem;">
+              <span>Saving local database Blob...</span>
+              <span id="progressText">0%</span>
+            </div>
+            <div class="progress-bar-fill" id="uploadProgressBar"></div>
+          </div>
+        </form>
+
+        <!-- Right Side: Project Manager -->
+        <div style="border-left: 1px solid var(--border-color); padding-left: 2rem;">
+          <h3 class="form-section-title" style="font-size: 1.3rem;">
+            <i data-lucide="folder" style="color: var(--color-primary); margin-right: 6px;"></i> Projects
+          </h3>
+          <div class="form-group">
+            <label class="form-label">Create New Project</label>
+            <div style="display: flex; gap: 0.5rem;">
+              <input type="text" id="newProjectName" class="form-input" placeholder="e.g. Project AP-104"
+                style="flex-grow: 1;">
+              <button type="button" class="btn-secondary" id="btnCreateProject"
+                style="height: 42px; white-space: nowrap;">
+                <i data-lucide="plus"></i> Create
+              </button>
+            </div>
+          </div>
+
+          <div style="margin-top: 2rem;">
+            <label class="form-label" style="display: block; margin-bottom: 0.75rem;">Active Projects</label>
+            <div id="activeProjectsList"
+              style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 300px; overflow-y: auto; padding-right: 0.25rem;">
+              <!-- Active projects list goes here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifications Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Shared DB & App Logic -->
+  <script src="db.js?v=12"></script>
+  <script src="app.js?v=12"></script>
+</body>
+
+</html>
