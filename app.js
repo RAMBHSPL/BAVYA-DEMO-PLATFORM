@@ -89,6 +89,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Update UI based on initial admin login state
   updateAdminUi();
+
+  // Check if we should automatically open the login modal (e.g. redirected from admin.html)
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('login') === 'true') {
+    document.getElementById('loginUsername').value = '';
+    document.getElementById('loginPassword').value = '';
+    document.getElementById('loginModal').style.display = 'flex';
+    document.getElementById('loginUsername').focus();
+    showToast('Please log in to access the admin features.', 'info');
+  }
 });
 
 // Setup General Gallery Event Listeners
@@ -1571,19 +1581,31 @@ function setupAdminListeners() {
   });
 
   // Submit Login Form
-  loginForm.addEventListener('submit', (e) => {
+  loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const username = document.getElementById('loginUsername').value.trim();
     const password = document.getElementById('loginPassword').value.trim();
 
-    if (username.toUpperCase() === 'BAVYA' && (password === 'admin' || password === '12345' || password === 'admin123' || password === 'bavya123')) {
-      sessionStorage.setItem('isAdmin', 'true');
-      showToast('Successfully logged in!', 'success');
-      document.getElementById('loginModal').style.display = 'none';
-      updateAdminUi();
-      filterAndRenderVideos();
-    } else {
-      showToast('Incorrect username or password', 'error');
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        sessionStorage.setItem('isAdmin', 'true');
+        sessionStorage.setItem('adminToken', data.token);
+        showToast('Successfully logged in!', 'success');
+        document.getElementById('loginModal').style.display = 'none';
+        updateAdminUi();
+        filterAndRenderVideos();
+      } else {
+        showToast(data.message || 'Incorrect username or password', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Failed to connect to authentication server', 'error');
     }
   });
 

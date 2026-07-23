@@ -34,6 +34,10 @@ MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD', '')
 MYSQL_DB = os.environ.get('MYSQL_DB', 'bavya_video_portal')
 MYSQL_PORT = int(os.environ.get('MYSQL_PORT', 3306))
 
+# Admin username and password for authentication
+ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'BAVYA')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'admin123')
+
 def get_db_connection():
     return pymysql.connect(
         host=MYSQL_HOST,
@@ -135,6 +139,31 @@ def serve_uploads(filename):
     return send_from_directory(UPLOADS_DIR, filename)
 
 # =========================================================================
+# AUTHENTICATION HELPERS & LOGIN API
+# =========================================================================
+
+def verify_admin_auth():
+    auth_header = request.headers.get('Authorization')
+    if auth_header and auth_header.startswith('Bearer '):
+        token = auth_header.split(' ')[1]
+        if token == ADMIN_PASSWORD:
+            return True
+    return False
+
+@app.route('/api/login', methods=['POST'])
+def login():
+    try:
+        data = request.get_json() or {}
+        username = data.get('username', '').strip()
+        password = data.get('password', '').strip()
+        if username.upper() == ADMIN_USERNAME.upper() and password == ADMIN_PASSWORD:
+            return jsonify({'success': True, 'token': ADMIN_PASSWORD})
+        return jsonify({'success': False, 'message': 'Incorrect username or password'}), 401
+    except Exception as e:
+        print(f"Login error: {e}")
+        return jsonify({'success': False, 'message': 'Internal auth server error'}), 500
+
+# =========================================================================
 # API ROUTES
 # =========================================================================
 
@@ -171,6 +200,8 @@ def get_videos():
 # Upload Video & Metadata
 @app.route('/api/videos', methods=['POST'])
 def add_video():
+    if not verify_admin_auth():
+        return jsonify({'message': 'Unauthorized access'}), 401
     try:
         # Extract fields
         video_id = request.form.get('id')
@@ -295,6 +326,8 @@ def add_video():
 # Delete Video
 @app.route('/api/videos/<string:video_id>', methods=['DELETE'])
 def delete_video(video_id):
+    if not verify_admin_auth():
+        return jsonify({'message': 'Unauthorized access'}), 401
     try:
         conn = get_db_connection()
         try:
@@ -355,6 +388,8 @@ def get_projects():
 
 @app.route('/api/projects', methods=['POST'])
 def save_projects():
+    if not verify_admin_auth():
+        return jsonify({'message': 'Unauthorized access'}), 401
     try:
         data = request.get_json() or {}
         project_list = data.get('list', [])
@@ -391,6 +426,8 @@ def get_custom_fields():
 
 @app.route('/api/custom-fields', methods=['POST'])
 def save_custom_fields():
+    if not verify_admin_auth():
+        return jsonify({'message': 'Unauthorized access'}), 401
     try:
         data = request.get_json() or {}
         fields = data.get('fields', [])
@@ -430,6 +467,8 @@ def get_video_order():
 
 @app.route('/api/video-order', methods=['POST'])
 def save_video_order():
+    if not verify_admin_auth():
+        return jsonify({'message': 'Unauthorized access'}), 401
     try:
         data = request.get_json() or {}
         order = data.get('order', [])

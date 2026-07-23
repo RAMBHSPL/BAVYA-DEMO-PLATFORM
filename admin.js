@@ -22,6 +22,14 @@ const LANG_MAP = {
 
 // Initialize Page
 document.addEventListener('DOMContentLoaded', async () => {
+  // Check if authenticated
+  const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+  const adminToken = sessionStorage.getItem('adminToken');
+  if (!isAdmin || !adminToken) {
+    window.location.href = 'index.html?login=true';
+    return;
+  }
+
   // Initialize Lucide Icons
   lucide.createIcons();
 

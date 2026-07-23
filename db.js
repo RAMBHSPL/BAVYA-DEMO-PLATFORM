@@ -5,6 +5,15 @@ function initDb() {
   return Promise.resolve(null);
 }
 
+// Helper to inject admin token into fetch headers
+function getAuthHeaders(headers = {}) {
+  const token = sessionStorage.getItem('adminToken') || '';
+  return {
+    ...headers,
+    'Authorization': `Bearer ${token}`
+  };
+}
+
 // Fetch all videos from server database
 async function getVideos() {
   const response = await fetch('/api/videos');
@@ -93,6 +102,7 @@ async function addVideo(video) {
 
   const response = await fetch('/api/videos', {
     method: 'POST',
+    headers: getAuthHeaders(),
     body: formData
   });
 
@@ -107,7 +117,8 @@ async function addVideo(video) {
 // Delete video from server
 async function deleteVideo(id) {
   const response = await fetch(`/api/videos/${encodeURIComponent(id)}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: getAuthHeaders()
   });
   if (!response.ok) {
     const err = await response.json();
@@ -128,7 +139,7 @@ async function getCustomFields() {
 async function saveCustomFields(fields) {
   const response = await fetch('/api/custom-fields', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify({ fields })
   });
   if (!response.ok) {
@@ -149,7 +160,7 @@ async function getProjects() {
 async function saveProjects(list) {
   const response = await fetch('/api/projects', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify({ list })
   });
   if (!response.ok) {
@@ -170,7 +181,7 @@ async function getVideoOrder() {
 async function saveVideoOrder(order) {
   const response = await fetch('/api/video-order', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify({ order })
   });
   if (!response.ok) {
