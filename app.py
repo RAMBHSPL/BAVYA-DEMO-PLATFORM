@@ -499,7 +499,7 @@ init_db_schema()
 
 if __name__ == '__main__':
     print("===================================================")
-    print("BAVYA DEMO Video Portal Running (Python Flask + MySQL)")
-    print("Local Access URL: http://127.0.0.1:5000")
+    print("BAVYA | DEMO Running (Python Flask + MySQL)")
+    print("Local Access URL: http://0.0.0.0:5000")
     print("===================================================")
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

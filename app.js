@@ -107,6 +107,21 @@ function setupGalleryListeners() {
   const searchInput = document.getElementById('searchInput');
   const projectFilterSelect = document.getElementById('projectFilterSelect');
   const btnCopyProjectLink = document.getElementById('btnCopyProjectLink');
+  const btnToggleFilters = document.getElementById('btnToggleFilters');
+  const headerContainer = document.querySelector('.header-container');
+
+  if (btnToggleFilters && headerContainer) {
+    btnToggleFilters.addEventListener('click', () => {
+      headerContainer.classList.toggle('show-filters');
+      const isExpanded = headerContainer.classList.contains('show-filters');
+      if (isExpanded) {
+        btnToggleFilters.innerHTML = '<i data-lucide="x" style="width: 16px; height: 16px;"></i>';
+      } else {
+        btnToggleFilters.innerHTML = '<i data-lucide="search" style="width: 16px; height: 16px;"></i>';
+      }
+      lucide.createIcons();
+    });
+  }
 
   // Search Input Listener – works for any element with id="searchInput"
   if (searchInput) {
@@ -125,6 +140,8 @@ function setupGalleryListeners() {
       } else {
         btnCopyProjectLink.setAttribute('disabled', 'true');
       }
+      activeTagFilter = 'all';
+      renderTagChips();
       filterAndRenderVideos();
     });
   }
@@ -385,20 +402,25 @@ function renderTagChips() {
   const container = document.getElementById('tagChipsContainer');
   if (!container) return;
 
-  // Collect all unique tags
+  // Collect all unique tags (filtered by active project)
   const tagsSet = new Set();
   allVideos.forEach(v => {
-    if (v.tags) {
-      v.tags.forEach(t => tagsSet.add(t));
+    if (!activeProjectFilter || v.projectName === activeProjectFilter) {
+      if (v.tags) {
+        v.tags.forEach(t => tagsSet.add(t));
+      }
     }
   });
 
-  // Clear all except the first "All Videos" chip
-  container.innerHTML = `<button class="chip active" data-tag="all">All Videos</button>`;
+  // Determine the default chip label based on project filter selection
+  const defaultLabel = activeProjectFilter ? activeProjectFilter : 'All Videos';
+
+  // Clear all except the first chip
+  container.innerHTML = `<button class="chip${activeTagFilter === 'all' ? ' active' : ''}" data-tag="all">${defaultLabel}</button>`;
 
   tagsSet.forEach(tag => {
     const btn = document.createElement('button');
-    btn.className = 'chip';
+    btn.className = `chip${activeTagFilter === tag ? ' active' : ''}`;
     btn.setAttribute('data-tag', tag);
     btn.textContent = tag;
     container.appendChild(btn);
@@ -544,7 +566,7 @@ function filterAndRenderVideos() {
         }
         previewVideoElement.style.display = 'block';
         if (thumbnailImg) thumbnailImg.style.opacity = '0';
-        
+
         previewVideoElement.addEventListener('loadedmetadata', () => {
           // Seek to 15% of video duration (max 2s) to skip initial black intros
           let seekTime = 1.5;
@@ -736,7 +758,7 @@ function renderFeaturedCarousel(videos) {
     }
     scrollContainer.setAttribute('data-active-id', activeVideoId);
     scrollContainer.innerHTML = '';
-    
+
     videos.forEach((video) => {
       const card = document.createElement('div');
       const isExpanded = video.id === activeVideoId;
@@ -780,7 +802,7 @@ function renderFeaturedCarousel(videos) {
             previewVid.src = video.videoFile;
           }
           previewVid.style.display = 'block';
-          
+
           previewVid.addEventListener('loadedmetadata', () => {
             // Seek to 15% of video duration (max 2s) to bypass initial black intros
             let seekTime = 1.5;
@@ -816,7 +838,7 @@ function renderFeaturedCarousel(videos) {
 
         // Tag Badges
         const tagBadges = video.tags.map(tag => `<span class="tag-badge" style="background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.15); color:#fff; font-size:0.68rem;">${tag}</span>`).slice(0, 3).join('');
-        
+
         // Metadata description
         let metadataText = '';
         if (video.customData) {
@@ -920,19 +942,19 @@ function renderFeaturedCarousel(videos) {
       cloneCard.className = 'featured-card vertical';
       cloneCard.setAttribute('data-id', firstVideo.id);
       cloneCard.setAttribute('data-clone', 'true');
-      
+
       const thumbSrc = firstVideo.thumbnail || getVideoFallbackThumbnail(firstVideo.name, firstVideo.projectName);
       const projName = firstVideo.projectName || 'General';
-      
+
       const bg = document.createElement('div');
       bg.className = 'featured-card-bg';
       bg.style.backgroundImage = `url('${thumbSrc}')`;
       cloneCard.appendChild(bg);
-      
+
       const overlay = document.createElement('div');
       overlay.className = 'featured-card-overlay';
       cloneCard.appendChild(overlay);
-      
+
       const content = document.createElement('div');
       content.className = 'featured-vertical-content';
       content.innerHTML = `
@@ -940,11 +962,11 @@ function renderFeaturedCarousel(videos) {
         <h3 class="featured-vertical-title" title="${firstVideo.name}">${firstVideo.name}</h3>
       `;
       cloneCard.appendChild(content);
-      
+
       cloneCard.addEventListener('click', () => {
         handleTransitionToFirst();
       });
-      
+
       scrollContainer.appendChild(cloneCard);
     }
 
@@ -1015,7 +1037,7 @@ function startFeaturedCarouselAutoplay(videos) {
     if (currentIndex === -1) return;
 
     const nextIndex = (currentIndex + 1) % videos.length;
-    
+
     if (nextIndex === 0) {
       // Transition from last card to the clone card at the end
       const cloneCard = scrollContainer.querySelector('.featured-card[data-clone="true"]');
@@ -1532,13 +1554,37 @@ function updateVolumeIcon() {
 
 // Immerse player into fullscreen layout
 function toggleFullscreen() {
-  if (!document.fullscreenElement) {
-    videoPlayerContainer.requestFullscreen()
-      .catch(err => {
+  if (videoPlayerContainer.requestFullscreen) {
+    if (!document.fullscreenElement) {
+      videoPlayerContainer.requestFullscreen().catch(err => {
         showToast('Error enabling fullscreen mode', 'error');
       });
+    } else {
+      document.exitFullscreen();
+    }
+  } else if (videoPlayerContainer.webkitRequestFullscreen) {
+    if (!document.webkitFullscreenElement) {
+      videoPlayerContainer.webkitRequestFullscreen();
+    } else {
+      document.webkitExitFullscreen();
+    }
+  } else if (videoPlayerContainer.mozRequestFullScreen) {
+    if (!document.mozFullScreenElement) {
+      videoPlayerContainer.mozRequestFullScreen();
+    } else {
+      document.mozCancelFullScreen();
+    }
+  } else if (videoPlayerContainer.msRequestFullscreen) {
+    if (!document.msFullscreenElement) {
+      videoPlayerContainer.msRequestFullscreen();
+    } else {
+      document.msExitFullscreen();
+    }
+  } else if (videoPlayer.webkitEnterFullscreen) {
+    // Safari iOS iPhone fallback (video tag only)
+    videoPlayer.webkitEnterFullscreen();
   } else {
-    document.exitFullscreen();
+    showToast('Fullscreen mode not supported on this device', 'error');
   }
 }
 
@@ -1834,16 +1880,18 @@ async function updateAdminUi() {
   const btnOpenUploadModal = document.getElementById('btnOpenUploadModal');
 
   if (isAdmin) {
-    btnLoginBtn.innerHTML = '<i data-lucide="unlock"></i> Admin Logout';
-    btnLoginBtn.className = 'btn-secondary';
+    btnLoginBtn.innerHTML = '<i data-lucide="log-out" style="width: 18px; height: 18px;"></i>';
+    btnLoginBtn.className = 'btn-admin-icon';
+    btnLoginBtn.title = 'Admin Logout';
     btnOpenUploadModal.style.display = 'inline-flex';
 
     // Pre-load project manager lists quietly
     await refreshProjectsList();
     renderDynamicFormFields();
   } else {
-    btnLoginBtn.innerHTML = '<i data-lucide="lock"></i> Admin Login';
-    btnLoginBtn.className = 'btn-secondary';
+    btnLoginBtn.innerHTML = '<i data-lucide="orbit" style="width: 18px; height: 18px;"></i>';
+    btnLoginBtn.className = 'btn-admin-icon';
+    btnLoginBtn.title = 'Portal Settings';
     btnOpenUploadModal.style.display = 'none';
   }
   lucide.createIcons();
@@ -2155,7 +2203,7 @@ async function handleUploadSubmit(e) {
       }
     } else if (selectedVideoFile) {
       videoFileToSave = selectedVideoFile;
-      
+
       // 3. If no custom thumbnail was selected (neither new nor preserved), auto-generate it
       if (!thumbnailDataUrl) {
         progressFill.style.width = '50%';

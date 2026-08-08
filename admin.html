@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BAVYA DEMO PLATFORM - Admin Console</title>
-  <link rel="stylesheet" href="style.css?v=12">
+  <title>BavyaStream - Admin Console</title>
+  <link rel="stylesheet" href="style.css?v=27">
   <!-- Lucide Icons for clean look -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
@@ -18,7 +19,7 @@
       -webkit-text-fill-color: transparent;
       font-family: 'Outfit';
     }
-    
+
     .admin-header-subtitle {
       color: var(--text-secondary);
       font-size: 1rem;
@@ -79,16 +80,16 @@
     .metric-card:hover {
       transform: translateY(-3px);
       border-color: rgba(212, 160, 23, 0.25) !important;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(212,160,23,0.05) !important;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(212, 160, 23, 0.05) !important;
     }
 
     .project-item {
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      background: rgba(255, 255, 255, 0.02); 
-      padding: 0.75rem 1rem; 
-      border-radius: var(--radius-sm); 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
       border: 1px solid var(--border-color);
       transition: all var(--transition-fast);
     }
@@ -108,13 +109,13 @@
 
     /* Subtitle and Audio dynamic list items styling */
     .track-list-item {
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      background: rgba(255, 255, 255, 0.02); 
-      padding: 0.6rem 0.9rem; 
-      border-radius: var(--radius-sm); 
-      border: 1px solid var(--border-color); 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 0.6rem 0.9rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
       font-size: 0.88rem;
       transition: all var(--transition-fast);
     }
@@ -134,6 +135,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- App Header -->
@@ -143,7 +145,7 @@
         <div class="brand-icon">
           <i data-lucide="play-circle"></i>
         </div>
-        <span class="brand-name">BAVYA DEMO PLATFORM</span>
+        <span class="brand-name">BAVYA STREAM</span>
       </a>
       <nav class="nav-links">
         <a href="index.html" class="nav-link">
@@ -158,63 +160,89 @@
 
   <!-- Page Body -->
   <main class="container">
-    
+
     <!-- Admin Hero Headers -->
     <div>
       <h1 class="admin-header-title">Admin Console</h1>
-      <p class="admin-header-subtitle">Manage project folders, upload master video assets, and configure multi-language translations and voiceovers.</p>
+      <p class="admin-header-subtitle">Manage project folders, upload master video assets, and configure multi-language
+        translations and voiceovers.</p>
     </div>
 
     <!-- Admin Metrics Dashboard Grid -->
-    <div class="metrics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem;">
-      <div class="metric-card glass-panel" style="padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; border-left: 4px solid var(--color-secondary) !important;">
-        <div class="metric-icon" style="background: rgba(212, 160, 23, 0.08); color: var(--color-secondary); padding: 0.85rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+    <div class="metrics-grid"
+      style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem;">
+      <div class="metric-card glass-panel"
+        style="padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; border-left: 4px solid var(--color-secondary) !important;">
+        <div class="metric-icon"
+          style="background: rgba(212, 160, 23, 0.08); color: var(--color-secondary); padding: 0.85rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
           <i data-lucide="folder" style="width: 24px; height: 24px;"></i>
         </div>
         <div>
-          <div style="font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em;">Total Projects</div>
-          <div id="metricTotalProjects" style="font-size: 1.85rem; font-weight: 800; color: #fff; margin-top: 0.15rem; font-family: 'Outfit';">0</div>
-        </div>
-      </div>
-      
-      <div class="metric-card glass-panel" style="padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; border-left: 4px solid var(--color-accent) !important;">
-        <div class="metric-icon" style="background: rgba(124, 58, 237, 0.08); color: var(--color-accent); padding: 0.85rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
-          <i data-lucide="video" style="width: 24px; height: 24px;"></i>
-        </div>
-        <div>
-          <div style="font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em;">Total Videos</div>
-          <div id="metricTotalVideos" style="font-size: 1.85rem; font-weight: 800; color: #fff; margin-top: 0.15rem; font-family: 'Outfit';">0</div>
+          <div
+            style="font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em;">
+            Total Projects</div>
+          <div id="metricTotalProjects"
+            style="font-size: 1.85rem; font-weight: 800; color: #fff; margin-top: 0.15rem; font-family: 'Outfit';">0
+          </div>
         </div>
       </div>
 
-      <div class="metric-card glass-panel" style="padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; border-left: 4px solid var(--color-primary) !important;">
-        <div class="metric-icon" style="background: rgba(155, 28, 58, 0.08); color: var(--color-primary); padding: 0.85rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+      <div class="metric-card glass-panel"
+        style="padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; border-left: 4px solid var(--color-accent) !important;">
+        <div class="metric-icon"
+          style="background: rgba(124, 58, 237, 0.08); color: var(--color-accent); padding: 0.85rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+          <i data-lucide="video" style="width: 24px; height: 24px;"></i>
+        </div>
+        <div>
+          <div
+            style="font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em;">
+            Total Videos</div>
+          <div id="metricTotalVideos"
+            style="font-size: 1.85rem; font-weight: 800; color: #fff; margin-top: 0.15rem; font-family: 'Outfit';">0
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-card glass-panel"
+        style="padding: 1.5rem; display: flex; align-items: center; gap: 1.25rem; border-left: 4px solid var(--color-primary) !important;">
+        <div class="metric-icon"
+          style="background: rgba(155, 28, 58, 0.08); color: var(--color-primary); padding: 0.85rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
           <i data-lucide="hard-drive" style="width: 24px; height: 24px;"></i>
         </div>
         <div>
-          <div style="font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em;">Storage Space Used</div>
-          <div id="metricTotalSize" style="font-size: 1.85rem; font-weight: 800; color: #fff; margin-top: 0.15rem; font-family: 'Outfit';">0.0 MB</div>
+          <div
+            style="font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em;">
+            Storage Space Used</div>
+          <div id="metricTotalSize"
+            style="font-size: 1.85rem; font-weight: 800; color: #fff; margin-top: 0.15rem; font-family: 'Outfit';">0.0
+            MB</div>
         </div>
       </div>
     </div>
-    
+
     <div class="admin-grid">
       <!-- PROJECT MANAGER (LEFT) -->
-      <section class="glass-panel" style="display: flex; flex-direction: column; justify-content: flex-start; height: fit-content;">
+      <section class="glass-panel"
+        style="display: flex; flex-direction: column; justify-content: flex-start; height: fit-content;">
         <h2 class="form-section-title" style="margin-bottom: 1rem; border-bottom: none; padding-bottom: 0;">
           <i data-lucide="folder-plus"></i> Project Management
         </h2>
-        <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.5rem; opacity: 0.8;">
-          Create separate workspace folders to organize and categorize uploads. Added folders appear instantly in options.
+        <p
+          style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.5rem; opacity: 0.8;">
+          Create separate workspace folders to organize and categorize uploads. Added folders appear instantly in
+          options.
         </p>
 
         <!-- New Project Form -->
         <div style="display: flex; gap: 0.5rem; align-items: flex-end; margin-bottom: 1.5rem;">
           <div class="form-group" style="margin-bottom: 0; flex-grow: 1;">
-            <label class="form-label" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em;">New Project Name</label>
-            <input type="text" id="newProjectName" class="form-input" placeholder="e.g. Project AP-104" style="height: 42px;">
+            <label class="form-label" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em;">New
+              Project Name</label>
+            <input type="text" id="newProjectName" class="form-input" placeholder="e.g. Project AP-104"
+              style="height: 42px;">
           </div>
-          <button type="button" class="btn-sm-action" id="btnCreateProject" title="Create Project" style="height: 42px; width: 42px; margin-bottom: 0; flex-shrink: 0; border-radius: var(--radius-md);">
+          <button type="button" class="btn-sm-action" id="btnCreateProject" title="Create Project"
+            style="height: 42px; width: 42px; margin-bottom: 0; flex-shrink: 0; border-radius: var(--radius-md);">
             <i data-lucide="plus" style="width: 20px; height: 20px;"></i>
           </button>
         </div>
@@ -223,12 +251,16 @@
 
         <!-- Active Projects List -->
         <div>
-          <h3 style="font-size: 0.95rem; color: #fff; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem;">
-            <i data-lucide="folders" style="width: 16px; height: 16px; color: var(--color-secondary);"></i> Active Projects
+          <h3
+            style="font-size: 0.95rem; color: #fff; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem;">
+            <i data-lucide="folders" style="width: 16px; height: 16px; color: var(--color-secondary);"></i> Active
+            Projects
           </h3>
-          <div id="activeProjectsList" style="max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem; padding-right: 0.25rem;">
+          <div id="activeProjectsList"
+            style="max-height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem; padding-right: 0.25rem;">
             <!-- Dynamic projects list -->
-            <p style="color: var(--text-muted); font-size: 0.9rem; text-align: center; padding: 1rem;">No custom projects created yet.</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem; text-align: center; padding: 1rem;">No custom
+              projects created yet.</p>
           </div>
         </div>
       </section>
@@ -240,34 +272,42 @@
         </h2>
 
         <form id="uploadVideoForm">
-          
+
           <!-- STEP 1: Video File Selection -->
           <div class="form-step-container">
             <div class="form-step-header">
               <div class="form-step-number">1</div>
               <div class="form-step-title">Select Master Video File</div>
             </div>
-            
+
             <div class="form-group" style="margin-bottom: 0;">
-              <div class="drop-zone" id="dropZone" style="border: 2px dashed rgba(212, 160, 23, 0.25); background: rgba(212, 160, 23, 0.01);">
-                <div class="drop-zone-icon" style="background: rgba(212, 160, 23, 0.05); color: var(--color-secondary);">
+              <div class="drop-zone" id="dropZone"
+                style="border: 2px dashed rgba(212, 160, 23, 0.25); background: rgba(212, 160, 23, 0.01);">
+                <div class="drop-zone-icon"
+                  style="background: rgba(212, 160, 23, 0.05); color: var(--color-secondary);">
                   <i data-lucide="video" style="width: 24px; height: 24px;"></i>
                 </div>
-                <div class="drop-zone-title" style="color: #fff; font-size: 1.05rem;">Drag & drop your video file here</div>
-                <div class="drop-zone-desc" style="color: var(--text-secondary); opacity: 0.85;">or click to select from your device (MP4, WebM, OGG)</div>
+                <div class="drop-zone-title" style="color: #fff; font-size: 1.05rem;">Drag & drop your video file here
+                </div>
+                <div class="drop-zone-desc" style="color: var(--text-secondary); opacity: 0.85;">or click to select from
+                  your device (MP4, WebM, OGG)</div>
                 <input type="file" id="videoFileInput" accept="video/*" style="display: none;">
               </div>
             </div>
 
             <!-- Selected File Details -->
             <div id="selectedFileBox" style="display: none; margin-top: 0.25rem;">
-              <div class="file-selected-box" style="margin-bottom: 0; background: rgba(212, 160, 23, 0.06); border-color: rgba(212, 160, 23, 0.35);">
-                <i data-lucide="file-video" class="file-selected-icon" style="color: var(--color-secondary); width: 22px; height: 22px;"></i>
+              <div class="file-selected-box"
+                style="margin-bottom: 0; background: rgba(212, 160, 23, 0.06); border-color: rgba(212, 160, 23, 0.35);">
+                <i data-lucide="file-video" class="file-selected-icon"
+                  style="color: var(--color-secondary); width: 22px; height: 22px;"></i>
                 <div class="file-selected-details">
                   <div class="file-name" id="selectedFileName" style="font-weight: 700; color: #fff;">filename.mp4</div>
-                  <div class="file-size" id="selectedFileSize" style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.1rem;">0.00 MB</div>
+                  <div class="file-size" id="selectedFileSize"
+                    style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.1rem;">0.00 MB</div>
                 </div>
-                <button type="button" class="btn-remove-file" id="btnRemoveFile" title="Remove File" style="background: rgba(255,255,255,0.05); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; padding: 0;">
+                <button type="button" class="btn-remove-file" id="btnRemoveFile" title="Remove File"
+                  style="background: rgba(255,255,255,0.05); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; padding: 0;">
                   <i data-lucide="x" style="width: 14px; height: 14px;"></i>
                 </button>
               </div>
@@ -280,45 +320,61 @@
               <div class="form-step-number">2</div>
               <div class="form-step-title">Video Attributes & Metadata</div>
             </div>
-            
+
             <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
               <div class="form-group" style="margin-bottom: 0;">
-                <label class="form-label" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em;">Video Display Title</label>
-                <input type="text" id="videoTitle" class="form-input" placeholder="e.g. Workshop Inbound Overview" required>
+                <label class="form-label"
+                  style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em;">Video Display
+                  Title</label>
+                <input type="text" id="videoTitle" class="form-input" placeholder="e.g. Workshop Inbound Overview"
+                  required>
               </div>
-              
+
               <div class="form-group" style="margin-bottom: 0;">
-                <label class="form-label" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em;">Project Folder</label>
-                <select id="projectSelect" class="filter-select" style="width: 100%; height: 42px; border-radius: var(--radius-md);" required>
+                <label class="form-label"
+                  style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em;">Project Folder</label>
+                <select id="projectSelect" class="filter-select"
+                  style="width: 100%; height: 42px; border-radius: var(--radius-md);" required>
                   <option value="" disabled selected>-- Select Project --</option>
                 </select>
               </div>
             </div>
 
             <div class="form-group" style="margin-bottom: 1.25rem;">
-              <label class="form-label" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em;">Search Tags</label>
-              <div class="tag-input-container" id="tagInputContainer" style="border: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.25);">
+              <label class="form-label"
+                style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em;">Search Tags</label>
+              <div class="tag-input-container" id="tagInputContainer"
+                style="border: 1px solid rgba(255,255,255,0.08); background: rgba(0,0,0,0.25);">
                 <!-- Dynamically added tags will show as pills here -->
-                <input type="text" id="tagTextInput" class="tag-text-input" placeholder="Type tag & press Enter or comma...">
+                <input type="text" id="tagTextInput" class="tag-text-input"
+                  placeholder="Type tag & press Enter or comma...">
               </div>
-              <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Type tag and press Enter/comma to add. Use keywords like L0, compliance, overview.</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Type tag and press
+                Enter/comma to add. Use keywords like L0, compliance, overview.</span>
             </div>
 
             <!-- Custom Thumbnail Image Option -->
             <div class="form-group" style="margin-bottom: 0;">
-              <label class="form-label" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem;">
-                <i data-lucide="image" style="width: 15px; height: 15px; color: var(--color-secondary);"></i> Custom Thumbnail Image (Optional)
+              <label class="form-label"
+                style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem;">
+                <i data-lucide="image" style="width: 15px; height: 15px; color: var(--color-secondary);"></i> Custom
+                Thumbnail Image (Optional)
               </label>
               <div style="display: flex; gap: 0.5rem; align-items: center;">
                 <input type="file" id="thumbnailFileInput" accept="image/*" style="display: none;">
-                <button type="button" class="btn-secondary" id="btnSelectThumbnailFile" style="height: 42px; padding: 0 1rem; flex-grow: 1; text-align: left; font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-radius: var(--radius-md); border-color: rgba(255,255,255,0.06);">
-                  <i data-lucide="image" style="vertical-align: middle; margin-right: 5px; width: 16px; height: 16px;"></i> Choose Custom Thumbnail...
+                <button type="button" class="btn-secondary" id="btnSelectThumbnailFile"
+                  style="height: 42px; padding: 0 1rem; flex-grow: 1; text-align: left; font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-radius: var(--radius-md); border-color: rgba(255,255,255,0.06);">
+                  <i data-lucide="image"
+                    style="vertical-align: middle; margin-right: 5px; width: 16px; height: 16px;"></i> Choose Custom
+                  Thumbnail...
                 </button>
-                <button type="button" class="btn-remove-file" id="btnRemoveThumbnail" title="Remove Thumbnail" style="display: none; background: rgba(255,255,255,0.05); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; padding: 0;">
+                <button type="button" class="btn-remove-file" id="btnRemoveThumbnail" title="Remove Thumbnail"
+                  style="display: none; background: rgba(255,255,255,0.05); border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; padding: 0;">
                   <i data-lucide="x" style="width: 14px; height: 14px;"></i>
                 </button>
               </div>
-              <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Optional custom poster image. If blank, a frame from the video will be auto-generated.</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">Optional custom poster
+                image. If blank, a frame from the video will be auto-generated.</span>
             </div>
           </div>
 
@@ -328,14 +384,17 @@
               <div class="form-step-number">3</div>
               <div class="form-step-title">Multi-Language CC Subtitles & Audio Voiceovers</div>
             </div>
-            
+
             <!-- Translation CC Subtitles (.vtt) -->
             <div class="form-group" style="margin-bottom: 1.5rem;">
-              <label class="form-label" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem;">
-                <i data-lucide="subtitles" style="width: 15px; height: 15px; color: var(--color-secondary);"></i> Closed Caption / Translation Subtitles (.vtt)
+              <label class="form-label"
+                style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem;">
+                <i data-lucide="subtitles" style="width: 15px; height: 15px; color: var(--color-secondary);"></i> Closed
+                Caption / Translation Subtitles (.vtt)
               </label>
               <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
-                <select id="subtitleLangSelect" class="filter-select" style="min-width: 130px; height: 42px; border-radius: var(--radius-md); flex-shrink: 0;">
+                <select id="subtitleLangSelect" class="filter-select"
+                  style="min-width: 130px; height: 42px; border-radius: var(--radius-md); flex-shrink: 0;">
                   <option value="en">English CC</option>
                   <option value="te">Telugu CC</option>
                   <option value="hi">Hindi CC</option>
@@ -344,10 +403,14 @@
                   <option value="fr">French CC</option>
                 </select>
                 <input type="file" id="subtitleFileInput" accept=".vtt" style="display: none;">
-                <button type="button" class="btn-secondary" id="btnSelectSubtitleFile" style="height: 42px; padding: 0 1rem; flex-grow: 1; text-align: left; font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-radius: var(--radius-md); border-color: rgba(255,255,255,0.06);">
-                  <i data-lucide="file-text" style="vertical-align: middle; margin-right: 5px; width: 16px; height: 16px;"></i> Choose VTT File...
+                <button type="button" class="btn-secondary" id="btnSelectSubtitleFile"
+                  style="height: 42px; padding: 0 1rem; flex-grow: 1; text-align: left; font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-radius: var(--radius-md); border-color: rgba(255,255,255,0.06);">
+                  <i data-lucide="file-text"
+                    style="vertical-align: middle; margin-right: 5px; width: 16px; height: 16px;"></i> Choose VTT
+                  File...
                 </button>
-                <button type="button" class="btn-sm-action" id="btnAddSubtitleTrack" title="Add Track" style="height: 42px; width: 42px; margin-bottom: 0; flex-shrink: 0; border-radius: var(--radius-md);">
+                <button type="button" class="btn-sm-action" id="btnAddSubtitleTrack" title="Add Track"
+                  style="height: 42px; width: 42px; margin-bottom: 0; flex-shrink: 0; border-radius: var(--radius-md);">
                   <i data-lucide="plus" style="width: 18px; height: 18px;"></i>
                 </button>
               </div>
@@ -357,11 +420,14 @@
 
             <!-- Voiceover Audio Tracks -->
             <div class="form-group" style="margin-bottom: 0;">
-              <label class="form-label" style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem;">
-                <i data-lucide="headphones" style="width: 15px; height: 15px; color: var(--color-accent);"></i> Alternate Language Audio Voiceovers (.mp3, .wav, .m4a)
+              <label class="form-label"
+                style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem;">
+                <i data-lucide="headphones" style="width: 15px; height: 15px; color: var(--color-accent);"></i>
+                Alternate Language Audio Voiceovers (.mp3, .wav, .m4a)
               </label>
               <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
-                <select id="audioLangSelect" class="filter-select" style="min-width: 130px; height: 42px; border-radius: var(--radius-md); flex-shrink: 0;">
+                <select id="audioLangSelect" class="filter-select"
+                  style="min-width: 130px; height: 42px; border-radius: var(--radius-md); flex-shrink: 0;">
                   <option value="en">English Audio</option>
                   <option value="te">Telugu Audio</option>
                   <option value="hi">Hindi Audio</option>
@@ -370,10 +436,14 @@
                   <option value="fr">French Audio</option>
                 </select>
                 <input type="file" id="audioFileInput" accept="audio/*" style="display: none;">
-                <button type="button" class="btn-secondary" id="btnSelectAudioFile" style="height: 42px; padding: 0 1rem; flex-grow: 1; text-align: left; font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-radius: var(--radius-md); border-color: rgba(255,255,255,0.06);">
-                  <i data-lucide="music" style="vertical-align: middle; margin-right: 5px; width: 16px; height: 16px;"></i> Choose Audio File...
+                <button type="button" class="btn-secondary" id="btnSelectAudioFile"
+                  style="height: 42px; padding: 0 1rem; flex-grow: 1; text-align: left; font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-radius: var(--radius-md); border-color: rgba(255,255,255,0.06);">
+                  <i data-lucide="music"
+                    style="vertical-align: middle; margin-right: 5px; width: 16px; height: 16px;"></i> Choose Audio
+                  File...
                 </button>
-                <button type="button" class="btn-sm-action" id="btnAddAudioTrack" title="Add Audio Track" style="height: 42px; width: 42px; margin-bottom: 0; flex-shrink: 0; border-radius: var(--radius-md);">
+                <button type="button" class="btn-sm-action" id="btnAddAudioTrack" title="Add Audio Track"
+                  style="height: 42px; width: 42px; margin-bottom: 0; flex-shrink: 0; border-radius: var(--radius-md);">
                   <i data-lucide="plus" style="width: 18px; height: 18px;"></i>
                 </button>
               </div>
@@ -389,22 +459,29 @@
 
           <!-- Form Actions and Progress bar -->
           <div style="display: flex; gap: 0.75rem; margin-top: 1.75rem;">
-            <button type="submit" class="btn-primary" id="btnSubmitVideo" style="flex-grow: 1; border-radius: var(--radius-md); height: 48px;">
+            <button type="submit" class="btn-primary" id="btnSubmitVideo"
+              style="flex-grow: 1; border-radius: var(--radius-md); height: 48px;">
               <i data-lucide="upload" style="width: 20px; height: 20px;"></i> Save Video to Portal
             </button>
-            <button type="button" class="btn-secondary" id="btnCancelEdit" style="display: none; width: auto; flex-shrink: 0; border-radius: var(--radius-md); height: 48px; border-color: rgba(255,255,255,0.1); background: rgba(255, 255, 255, 0.05); color: #fff;">
+            <button type="button" class="btn-secondary" id="btnCancelEdit"
+              style="display: none; width: auto; flex-shrink: 0; border-radius: var(--radius-md); height: 48px; border-color: rgba(255,255,255,0.1); background: rgba(255, 255, 255, 0.05); color: #fff;">
               Cancel Edit
             </button>
           </div>
 
           <!-- Upload Progress Loader -->
-          <div class="progress-bar-container" id="uploadProgressContainer" style="border-radius: 99px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); padding: 0.25rem 0.5rem; height: auto; margin-top: 1.25rem;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 0.35rem; padding: 0 0.5rem;">
+          <div class="progress-bar-container" id="uploadProgressContainer"
+            style="border-radius: 99px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); padding: 0.25rem 0.5rem; height: auto; margin-top: 1.25rem;">
+            <div
+              style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 0.35rem; padding: 0 0.5rem;">
               <span id="progressStatusText" style="font-weight: 600;">Saving video content to local DB...</span>
               <span id="progressText" style="font-weight: 700; color: var(--color-secondary);">0%</span>
             </div>
-            <div style="background: rgba(255,255,255,0.04); border-radius: 99px; height: 8px; overflow: hidden; width: 100%;">
-              <div class="progress-bar-fill" id="uploadProgressBar" style="height: 100%; border-radius: 99px; background: linear-gradient(to right, var(--color-primary), var(--color-secondary)); transition: width 0.3s ease;"></div>
+            <div
+              style="background: rgba(255,255,255,0.04); border-radius: 99px; height: 8px; overflow: hidden; width: 100%;">
+              <div class="progress-bar-fill" id="uploadProgressBar"
+                style="height: 100%; border-radius: 99px; background: linear-gradient(to right, var(--color-primary), var(--color-secondary)); transition: width 0.3s ease;">
+              </div>
             </div>
           </div>
         </form>
@@ -417,14 +494,16 @@
         <h2 class="form-section-title" style="margin-bottom: 0; border-bottom: none; padding-bottom: 0;">
           <i data-lucide="database" style="color: var(--color-secondary);"></i> Video Catalog Manager
         </h2>
-        
+
         <!-- Quick Search inside Catalog -->
         <div style="position: relative; width: 250px;">
-          <i data-lucide="search" style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--text-muted); pointer-events: none;"></i>
-          <input type="text" id="catalogSearchInput" placeholder="Quick filter catalog..." style="width: 100%; height: 36px; padding: 0.5rem 1rem 0.5rem 2.2rem; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 99px; color: #fff; font-size: 0.85rem; outline: none; transition: all 0.2s;">
+          <i data-lucide="search"
+            style="position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--text-muted); pointer-events: none;"></i>
+          <input type="text" id="catalogSearchInput" placeholder="Quick filter catalog..."
+            style="width: 100%; height: 36px; padding: 0.5rem 1rem 0.5rem 2.2rem; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 99px; color: #fff; font-size: 0.85rem; outline: none; transition: all 0.2s;">
         </div>
       </div>
-      
+
       <div id="manageVideosList" class="manage-list" style="display: flex; flex-direction: column; gap: 0.75rem;">
         <!-- Dynamic list of video files -->
         <div style="color: var(--text-muted); text-align: center; padding: 3rem;">
@@ -440,7 +519,8 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Shared DB & Admin Script -->
-  <script src="db.js?v=12"></script>
-  <script src="admin.js?v=12"></script>
+  <script src="db.js?v=27"></script>
+  <script src="admin.js?v=27"></script>
 </body>
+
 </html>

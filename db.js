@@ -239,7 +239,7 @@ function getVideoFallbackThumbnail(title, projectName) {
       <text x="55" y="24" dominant-baseline="middle" text-anchor="middle" fill="#ffe67e" font-size="7.5" font-family="'Outfit', sans-serif" font-weight="700" letter-spacing="0.5">${displayProject}</text>
       
       <text x="50%" y="138" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-size="12" font-family="'Outfit', sans-serif" font-weight="600" letter-spacing="0.2">${displayTitle}</text>
-      <text x="50%" y="156" dominant-baseline="middle" text-anchor="middle" fill="#cfaea0" font-size="8" font-family="'Inter', sans-serif" letter-spacing="1.5" opacity="0.8">BAVYA PORTAL</text>
+      <text x="50%" y="156" dominant-baseline="middle" text-anchor="middle" fill="#cfaea0" font-size="8" font-family="'Inter', sans-serif" letter-spacing="1.5" opacity="0.8">BAVYA | DEMO</text>
     </svg>
   `;
   

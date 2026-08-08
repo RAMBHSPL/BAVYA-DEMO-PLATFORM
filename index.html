@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BAVYA DEMO PLATFORM</title>
-  <link rel="stylesheet" href="style.css?v=12">
+  <title>BavyaStream</title>
+  <link rel="stylesheet" href="style.css?v=27">
   <!-- Lucide Icons for clean look -->
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -19,21 +19,36 @@
         <div class="brand-icon">
           <i data-lucide="play-circle"></i>
         </div>
-        <span class="brand-name">BAVYA DEMO PLATFORM</span>
+        <span class="brand-name">BAVYA STREAM</span>
       </a>
-      <div class="header-search-wrapper">
+      <div class="header-search-wrapper mobile-hide">
         <i data-lucide="search" class="header-search-icon"></i>
         <input type="text" id="searchInput" class="header-search-input" placeholder="Search videos by title or tags...">
       </div>
+      <div class="header-project-filter" style="display: flex; gap: 0.5rem; align-items: center;">
+        <select id="projectFilterSelect" class="filter-select"
+          style="height: 38px; min-width: 140px; border-radius: 99px; background: rgba(40, 12, 18, 0.65); border: 1px solid rgba(155, 28, 58, 0.28); color: var(--text-secondary); padding: 0 1.8rem 0 0.9rem;">
+          <option value="">All Projects</option>
+        </select>
+        <button class="btn-secondary" id="btnCopyProjectLink" title="Copy Project Link"
+          style="height: 38px; width: 38px; padding: 0; border-radius: 99px; border-color: rgba(155, 28, 58, 0.28); background: rgba(155, 28, 58, 0.08);"
+          disabled>
+          <i data-lucide="link" style="width:15px;height:15px;"></i>
+        </button>
+      </div>
       <div class="nav-links"
-        style="display: flex; gap: 0.75rem; background: none; border: none; padding: 0; align-items: center; flex: 1 1 0%; justify-content: flex-end;">
+        style="display: flex; gap: 0.75rem; background: none; border: none; padding: 0; align-items: center; flex: 0 0 auto; justify-content: flex-end;">
+        <!-- Mobile Search & Filter Toggle -->
+        <button id="btnToggleFilters" class="btn-secondary mobile-only-btn" title="Toggle Search & Filters"
+          style="display: none; width: 38px; height: 38px; padding: 0; border-radius: 50%; border-color: rgba(155, 28, 58, 0.28); background: rgba(155, 28, 58, 0.08); align-items: center; justify-content: center; cursor: pointer;">
+          <i data-lucide="search" style="width: 16px; height: 16px;"></i>
+        </button>
         <button class="btn-primary" id="btnOpenUploadModal"
           style="display: none; width: auto; padding: 0.5rem 1.25rem; font-size: 0.85rem; height: 38px; border-radius: 99px; background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)); border: none; color: white; cursor: pointer; font-weight: 600; box-shadow: var(--shadow-glow-cyan); align-items: center; gap: 0.4rem;">
-          <i data-lucide="upload" style="width: 16px; height: 16px;"></i> Upload Video
+          <i data-lucide="upload" style="width: 16px; height: 16px;"></i> <span class="btn-text">Upload Video</span>
         </button>
-        <button class="btn-secondary" id="btnLoginBtn"
-          style="padding: 0.5rem 1.25rem; font-size: 0.85rem; height: 38px; border-radius: 99px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.4rem;">
-          <i data-lucide="lock" style="width: 16px; height: 16px;"></i> Admin Login
+        <button class="btn-admin-icon" id="btnLoginBtn" title="Portal Settings">
+          <i data-lucide="orbit" style="width: 18px; height: 18px;"></i>
         </button>
       </div>
     </div>
@@ -63,17 +78,6 @@
       <!-- Filter Bar (compact, no hero) -->
       <div class="filter-bar glass-panel">
         <div class="filter-bar-row">
-          <!-- Project Filter -->
-          <div style="display: flex; gap: 0.5rem; align-items: center;">
-            <select id="projectFilterSelect" class="filter-select">
-              <option value="">All Projects</option>
-            </select>
-            <button class="btn-secondary" id="btnCopyProjectLink" title="Copy Project Link"
-              style="height: 38px; width: 38px; padding: 0; border-radius: 10px;" disabled>
-              <i data-lucide="link" style="width:15px;height:15px;"></i>
-            </button>
-          </div>
-
           <!-- Dynamic custom fields filters -->
           <div id="dynamicFiltersContainer" style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
           </div>
@@ -111,7 +115,7 @@
         <!-- Video Player Section -->
         <div>
           <div class="player-container" id="videoPlayerContainer">
-            <video id="customVideoPlayer" class="main-video"></video>
+            <video id="customVideoPlayer" class="main-video" playsinline webkit-playsinline></video>
 
             <!-- Custom Controller Overlay -->
             <div class="custom-controls">
@@ -200,7 +204,7 @@
             </button>
           </div>
 
-          <div>
+          <div style="display: none;">
             <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--text-secondary);">Video Metadata</h3>
             <div class="metadata-grid" id="playerCustomFields">
               <!-- Dynamic custom attributes go here -->
@@ -434,8 +438,8 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Shared DB & App Logic -->
-  <script src="db.js?v=12"></script>
-  <script src="app.js?v=12"></script>
+  <script src="db.js?v=27"></script>
+  <script src="app.js?v=27"></script>
 </body>
 
 </html>
