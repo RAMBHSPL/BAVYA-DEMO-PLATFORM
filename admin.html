@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BavyaStream - Admin Console</title>
-  <link rel="stylesheet" href="style.css?v=27">
+  <link rel="stylesheet" href="style.css?v=28">
   <!-- Lucide Icons for clean look -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
@@ -435,7 +435,7 @@
                   <option value="es">Spanish Audio</option>
                   <option value="fr">French Audio</option>
                 </select>
-                <input type="file" id="audioFileInput" accept="audio/*" style="display: none;">
+                <input type="file" id="audioFileInput" accept=".mp3,.wav,.m4a,audio/*" style="display: none;">
                 <button type="button" class="btn-secondary" id="btnSelectAudioFile"
                   style="height: 42px; padding: 0 1rem; flex-grow: 1; text-align: left; font-size: 0.88rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border-radius: var(--radius-md); border-color: rgba(255,255,255,0.06);">
                   <i data-lucide="music"
@@ -519,8 +519,8 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Shared DB & Admin Script -->
-  <script src="db.js?v=27"></script>
-  <script src="admin.js?v=27"></script>
+  <script src="db.js?v=28"></script>
+  <script src="admin.js?v=28"></script>
 </body>
 
 </html>
